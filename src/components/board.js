@@ -4,6 +4,7 @@ import Square from './square';
 export default class Board extends React.Component {
   renderSquare(i, l) {
     return <Square
+      position={l}
       key={i}
       value={this.props.squares[i]}
       onClick={() => this.props.onClick({ i, l })}
@@ -20,7 +21,7 @@ export default class Board extends React.Component {
         squares.push(this.renderSquare(count, `${column},${line}`))
         count++;
       }
-      board.push(<div key={line} className="board-row">{squares}</div>)
+      board.push(<div key={line} className="flex">{squares}</div>)
     }
     return (
       <div>

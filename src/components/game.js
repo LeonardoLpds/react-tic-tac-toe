@@ -43,23 +43,26 @@ export default class Game extends React.Component {
         'Go to game start';
       return (
         <li key={move}>
-          <button className={move == this.state.stepNumber ? 'bold' : ''} onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button className={move == this.state.stepNumber ? 'font-bold' : ''} onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
     });
 
-    let status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    if (winner) status = "Winner: " + current.squares[winner[0]];
+    let status = '<span>Next player: </span>' + '<span class="font-bold text-2xl">' + (this.state.xIsNext ? 'X' : 'O') + '</span>';
+    if (winner) status = "<span class='text-green-400 font-bold'>WINNER: </span>" + '<span class="font-bold text-2xl text-green-400">' + current.squares[winner[0]] + '</span>';
     if (!winner && !current.squares.includes(null)) status = "Draw";
     return (
-      <div className="game">
-        <div className="game-board">
+      <div className="p-8 m-auto max-w-screen-md flex flex-row flex-wrap gap-4">
+        <div className='mx-auto flex items-center mb-8 justify-center gap-2 font-xl basis-full shrink-0' dangerouslySetInnerHTML={{ __html: status }}></div>
+        <div className="mx-auto">
           <Board squares={current.squares} onClick={square => this.handleClick(square)} winner={winner} />
         </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <button onClick={() => this.setState({ sortAscending: !this.state.sortAscending })}>
-            Sort moves {this.state.sortAscending ? 'descending' : 'ascending'}
+        <div className='mx-auto'>
+          <button
+            onClick={() => this.setState({ sortAscending: !this.state.sortAscending })}
+            className='font-bold text-center text-green-800 border-b mb-4 w-full'
+          >
+            Move history ↕
           </button>
           <ol>
             {this.state.sortAscending ? moves.sort() : moves.reverse()}
